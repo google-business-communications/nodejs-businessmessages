@@ -1,6 +1,10 @@
 {
   "name": "businessmessages",
   "version": "1.0.0",
+  "author": "Google Inc.",
+  "engines": {
+    "node": ">=10"
+  },
   "description": "Client library for Google's Business Messages API",
   "main": "v1.js",
   "scripts": {
