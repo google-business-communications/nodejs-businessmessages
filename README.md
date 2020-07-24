@@ -2,7 +2,7 @@
 
 [Business Messages](https://developers.google.com/business-communications/business-messages/guides/learn) is a mobile conversational channel that combines entry points on Google Maps, Search, and brand websites to create rich, asynchronous messaging experiences.
 
-This document contains to an [API reference](https://developers.google.com/business-communications/business-messages/reference/rest), samples,
+This document contains an [API reference](https://developers.google.com/business-communications/business-messages/reference/rest), samples,
 and other resources useful to developing Node.js applications.
 For additional help developing Business Messages applications, in Node.js and other languages, see our
 [Business Messages quickstart](https://developers.google.com/business-communications/business-messages/guides/quickstarts/echo-agent)
