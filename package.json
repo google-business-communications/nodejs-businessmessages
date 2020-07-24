@@ -1,0 +1,15 @@
+{
+  "name": "businessmessages",
+  "version": "1.0.0",
+  "description": "Client library for Google's Business Messages API",
+  "main": "v1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:google-business-communications/nodejs-businessmessages.git"
+  },
+  "author": "Sean Falconer",
+  "license": "Apache-2.0"
+}
