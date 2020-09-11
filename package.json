@@ -1,6 +1,6 @@
 {
   "name": "businessmessages",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Google Inc.",
   "engines": {
     "node": ">=10"
@@ -14,6 +14,5 @@
     "type": "git",
     "url": "git@github.com:google-business-communications/nodejs-businessmessages.git"
   },
-  "author": "Sean Falconer",
   "license": "Apache-2.0"
 }
