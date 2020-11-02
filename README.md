@@ -295,7 +295,7 @@ See the code examples to see example usage for most API features. The samples' `
 | Sample                      | Source Code                       |
 | --------------------------- | --------------------------------- |
 | Echo Bot | [source code](https://github.com/google-business-communications/bm-nodejs-echo-bot) |
-| Book Appointment Bot | [source code](https://github.com/google-business-communications/bc-bm-nodejs-command-line-examples/blob/master/agent_sample.js) |
+| Book Appointment Bot | [source code](https://github.com/google-business-communications/bm-nodejs-appointment-bot) |
 
 ## Versioning
 
