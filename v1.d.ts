@@ -1,23 +1,15 @@
-// Copyright 2019 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-import { OAuth2Client, JWT, Compute, UserRefreshClient, GaxiosPromise, GoogleConfigurable, MethodOptions, GlobalOptions, BodyResponseCallback, APIRequestContext } from 'googleapis-common';
+/// <reference types="node" />
+import { OAuth2Client, JWT, Compute, UserRefreshClient, GaxiosPromise, GoogleConfigurable, MethodOptions, StreamMethodOptions, GlobalOptions, GoogleAuth, BodyResponseCallback, APIRequestContext } from 'googleapis-common';
+import { Readable } from 'stream';
 export declare namespace businessmessages_v1 {
     export interface Options extends GlobalOptions {
         version: 'v1';
     }
     interface StandardParameters {
+        /**
+         * Auth client or API Key for the request
+         */
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient | GoogleAuth;
         /**
          * V1 error format.
          */
@@ -126,7 +118,7 @@ export declare namespace businessmessages_v1 {
          */
         altText?: string | null;
         /**
-         * Publicly reachable URL of the file. The platform determines the MIME type of the file from the content-type field in the HTTP headers when the platform fetches the file. The content-type field must be present and accurate in the HTTP response from the URL.  Maximum 5 MB.  Supported content types: image/jpeg, image/jpg, image/png
+         * Publicly reachable URL of the file. The platform determines the MIME type of the file from the content-type field in the HTTP headers when the platform fetches the file. The content-type field must be present and accurate in the HTTP response from the URL. Maximum 5 MB. Supported content types: image/jpeg, image/jpg, image/png
          */
         fileUrl?: string | null;
         /**
@@ -134,7 +126,7 @@ export declare namespace businessmessages_v1 {
          */
         forceRefresh?: boolean | null;
         /**
-         * Optional. Publicly reachable URL of the thumbnail.  If you don&#39;t provide a thumbnail URL, the platform displays a blank placeholder thumbnail until the user&#39;s device downloads the file.  Maximum 25 KB.  Supported content types: image/jpeg, image/jpg, image/png
+         * Optional. Publicly reachable URL of the thumbnail. If you don&#39;t provide a thumbnail URL, the platform displays a blank placeholder thumbnail until the user&#39;s device downloads the file. Maximum 25 KB. Supported content types: image/jpeg, image/jpg, image/png
          */
         thumbnailUrl?: string | null;
     }
@@ -187,6 +179,10 @@ export declare namespace businessmessages_v1 {
      */
     export interface Schema$BusinessMessagesMessage {
         /**
+         * Optional. If `true`, indicates that the message contains rich text. If the message contains invalid formatting, Business Messages returns an error.
+         */
+        containsRichText?: boolean | null;
+        /**
          * Optional. Fallback text that displays if the user&#39;s device doesn&#39;t support the message type or content.
          */
         fallback?: string | null;
@@ -207,7 +203,7 @@ export declare namespace businessmessages_v1 {
          */
         richCard?: Schema$BusinessMessagesRichCard;
         /**
-         * A list of suggested replies that appear as a list of suggestion chips following the associated message. Maximum 13 suggestions.  The chips only display when the associated message is the most recent message within the conversation (including both agent and user messages). The user can tap a suggested reply to send the text reply to the agent.
+         * A list of suggested replies that appear as a list of suggestion chips following the associated message. Maximum 13 suggestions. The chips only display when the associated message is the most recent message within the conversation (including both agent and user messages). The user can tap a suggested reply to send the text reply to the agent.
          */
         suggestions?: Schema$BusinessMessagesSuggestion[];
         /**
@@ -228,6 +224,10 @@ export declare namespace businessmessages_v1 {
      * Details about the representative (human or chatbot) that sent the message.
      */
     export interface Schema$BusinessMessagesRepresentative {
+        /**
+         * Optional. The representative&#39;s avatar image, as a publicly available URL. Displays as a circle. Avatar images don&#39;t support personal information, such as depictions of representatives in photographs or illustrations. Use images that don&#39;t identify individuals, such as icons, logos, or fictitious illustrations. After an avatar image is used in a message, the image can&#39;t be modified or deleted. Images must be 1024x1024 px and have a maximum files size of 50 KB.
+         */
+        avatarImage?: string | null;
         /**
          * Optional. Name of the representative.
          */
@@ -332,6 +332,60 @@ export declare namespace businessmessages_v1 {
         /**
          * businessmessages.conversations.events.create
          * @desc Creates an event in a conversation.
+         * @example
+         * // Before running the sample:
+         * // - Enable the API at:
+         * //   https://console.developers.google.com/apis/api/businessmessages.googleapis.com
+         * // - Login into gcloud by running:
+         * //   `$ gcloud auth application-default login`
+         * // - Install the npm module by running:
+         * //   `$ npm install googleapis`
+         *
+         * const {google} = require('googleapis');
+         * const businessmessages = google.businessmessages('v1');
+         *
+         * async function main() {
+         *   const auth = new google.auth.GoogleAuth({
+         *     // Scopes can be specified either as an array or as a single, space-delimited string.
+         *     scopes: [],
+         *   });
+         *
+         *   // Acquire an auth client, and bind it to all future calls
+         *   const authClient = await auth.getClient();
+         *   google.options({auth: authClient});
+         *
+         *   // Do the magic
+         *   const res = await businessmessages.conversations.events.create({
+         *     // The unique identifier of the event, assigned by the agent. If an event has the same `eventId` as a previous event in the conversation, Business Messages returns an `ALREADY_EXISTS` error.
+         *     eventId: 'placeholder-value',
+         *     // Required. The conversation that contains the message. Resolves to "conversations/{conversationId}".
+         *     parent: 'conversations/my-conversation',
+         *
+         *     // Request body metadata
+         *     requestBody: {
+         *       // request body parameters
+         *       // {
+         *       //   "name": "my_name",
+         *       //   "eventType": "my_eventType",
+         *       //   "representative": {}
+         *       // }
+         *     },
+         *   });
+         *   console.log(res.data);
+         *
+         *   // Example response
+         *   // {
+         *   //   "name": "my_name",
+         *   //   "eventType": "my_eventType",
+         *   //   "representative": {}
+         *   // }
+         * }
+         *
+         * main().catch(e => {
+         *   console.error(e);
+         *   throw e;
+         * });
+         *
          * @alias businessmessages.conversations.events.create
          * @memberOf! ()
          *
@@ -343,16 +397,14 @@ export declare namespace businessmessages_v1 {
          * @param {callback} callback The callback that handles the response.
          * @return {object} Request object
          */
+        create(params: Params$Resource$Conversations$Events$Create, options: StreamMethodOptions): GaxiosPromise<Readable>;
         create(params?: Params$Resource$Conversations$Events$Create, options?: MethodOptions): GaxiosPromise<Schema$BusinessMessagesEvent>;
+        create(params: Params$Resource$Conversations$Events$Create, options: StreamMethodOptions | BodyResponseCallback<Readable>, callback: BodyResponseCallback<Readable>): void;
         create(params: Params$Resource$Conversations$Events$Create, options: MethodOptions | BodyResponseCallback<Schema$BusinessMessagesEvent>, callback: BodyResponseCallback<Schema$BusinessMessagesEvent>): void;
         create(params: Params$Resource$Conversations$Events$Create, callback: BodyResponseCallback<Schema$BusinessMessagesEvent>): void;
         create(callback: BodyResponseCallback<Schema$BusinessMessagesEvent>): void;
     }
     export interface Params$Resource$Conversations$Events$Create extends StandardParameters {
-        /**
-         * Auth client or API Key for the request
-         */
-        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
         /**
          * The unique identifier of the event, assigned by the agent. If an event has the same `eventId` as a previous event in the conversation, Business Messages returns an `ALREADY_EXISTS` error.
          */
@@ -372,6 +424,68 @@ export declare namespace businessmessages_v1 {
         /**
          * businessmessages.conversations.messages.create
          * @desc Sends a message from an agent to a user. If a conversation doesn't exist or an agent tries to send a message in a conversation that it isn't authorized to participate in, returns a `PERMISSION DENIED` error.
+         * @example
+         * // Before running the sample:
+         * // - Enable the API at:
+         * //   https://console.developers.google.com/apis/api/businessmessages.googleapis.com
+         * // - Login into gcloud by running:
+         * //   `$ gcloud auth application-default login`
+         * // - Install the npm module by running:
+         * //   `$ npm install googleapis`
+         *
+         * const {google} = require('googleapis');
+         * const businessmessages = google.businessmessages('v1');
+         *
+         * async function main() {
+         *   const auth = new google.auth.GoogleAuth({
+         *     // Scopes can be specified either as an array or as a single, space-delimited string.
+         *     scopes: [],
+         *   });
+         *
+         *   // Acquire an auth client, and bind it to all future calls
+         *   const authClient = await auth.getClient();
+         *   google.options({auth: authClient});
+         *
+         *   // Do the magic
+         *   const res = await businessmessages.conversations.messages.create({
+         *     // Required. The conversation that contains the message. Resolves to "conversations/{conversationId}".
+         *     parent: 'conversations/my-conversation',
+         *
+         *     // Request body metadata
+         *     requestBody: {
+         *       // request body parameters
+         *       // {
+         *       //   "name": "my_name",
+         *       //   "messageId": "my_messageId",
+         *       //   "text": "my_text",
+         *       //   "richCard": {},
+         *       //   "representative": {},
+         *       //   "suggestions": [],
+         *       //   "fallback": "my_fallback",
+         *       //   "containsRichText": false
+         *       // }
+         *     },
+         *   });
+         *   console.log(res.data);
+         *
+         *   // Example response
+         *   // {
+         *   //   "name": "my_name",
+         *   //   "messageId": "my_messageId",
+         *   //   "text": "my_text",
+         *   //   "richCard": {},
+         *   //   "representative": {},
+         *   //   "suggestions": [],
+         *   //   "fallback": "my_fallback",
+         *   //   "containsRichText": false
+         *   // }
+         * }
+         *
+         * main().catch(e => {
+         *   console.error(e);
+         *   throw e;
+         * });
+         *
          * @alias businessmessages.conversations.messages.create
          * @memberOf! ()
          *
@@ -382,16 +496,14 @@ export declare namespace businessmessages_v1 {
          * @param {callback} callback The callback that handles the response.
          * @return {object} Request object
          */
+        create(params: Params$Resource$Conversations$Messages$Create, options: StreamMethodOptions): GaxiosPromise<Readable>;
         create(params?: Params$Resource$Conversations$Messages$Create, options?: MethodOptions): GaxiosPromise<Schema$BusinessMessagesMessage>;
+        create(params: Params$Resource$Conversations$Messages$Create, options: StreamMethodOptions | BodyResponseCallback<Readable>, callback: BodyResponseCallback<Readable>): void;
         create(params: Params$Resource$Conversations$Messages$Create, options: MethodOptions | BodyResponseCallback<Schema$BusinessMessagesMessage>, callback: BodyResponseCallback<Schema$BusinessMessagesMessage>): void;
         create(params: Params$Resource$Conversations$Messages$Create, callback: BodyResponseCallback<Schema$BusinessMessagesMessage>): void;
         create(callback: BodyResponseCallback<Schema$BusinessMessagesMessage>): void;
     }
     export interface Params$Resource$Conversations$Messages$Create extends StandardParameters {
-        /**
-         * Auth client or API Key for the request
-         */
-        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
         /**
          * Required. The conversation that contains the message. Resolves to "conversations/{conversationId}".
          */
@@ -406,7 +518,57 @@ export declare namespace businessmessages_v1 {
         constructor(context: APIRequestContext);
         /**
          * businessmessages.conversations.surveys.create
-         * @desc Creates a customer satisfaction survey in a conversation.  If an agent sends multiple surveys in the same conversation within 24 hours, surveys after the first return a `RESOURCE_EXHAUSTED` error.  If the client doesn't support the survey feature, survey returns a `FAILED_PRECONDITION` error.
+         * @desc Creates a customer satisfaction survey in a conversation. If an agent sends multiple surveys in the same conversation within 24 hours, surveys after the first return a `RESOURCE_EXHAUSTED` error. If the client doesn't support the survey feature, survey returns a `FAILED_PRECONDITION` error.
+         * @example
+         * // Before running the sample:
+         * // - Enable the API at:
+         * //   https://console.developers.google.com/apis/api/businessmessages.googleapis.com
+         * // - Login into gcloud by running:
+         * //   `$ gcloud auth application-default login`
+         * // - Install the npm module by running:
+         * //   `$ npm install googleapis`
+         *
+         * const {google} = require('googleapis');
+         * const businessmessages = google.businessmessages('v1');
+         *
+         * async function main() {
+         *   const auth = new google.auth.GoogleAuth({
+         *     // Scopes can be specified either as an array or as a single, space-delimited string.
+         *     scopes: [],
+         *   });
+         *
+         *   // Acquire an auth client, and bind it to all future calls
+         *   const authClient = await auth.getClient();
+         *   google.options({auth: authClient});
+         *
+         *   // Do the magic
+         *   const res = await businessmessages.conversations.surveys.create({
+         *     // Required. The conversation that contains the survey. Resolves to "conversations/{conversationId}".
+         *     parent: 'conversations/my-conversation',
+         *     // The unique identifier of the survey, assigned by the agent. If a survey attempts to use the same `surveyId` as a previous survey, Business Messages returns an `ALREADY_EXISTS` error.
+         *     surveyId: 'placeholder-value',
+         *
+         *     // Request body metadata
+         *     requestBody: {
+         *       // request body parameters
+         *       // {
+         *       //   "name": "my_name"
+         *       // }
+         *     },
+         *   });
+         *   console.log(res.data);
+         *
+         *   // Example response
+         *   // {
+         *   //   "name": "my_name"
+         *   // }
+         * }
+         *
+         * main().catch(e => {
+         *   console.error(e);
+         *   throw e;
+         * });
+         *
          * @alias businessmessages.conversations.surveys.create
          * @memberOf! ()
          *
@@ -418,16 +580,14 @@ export declare namespace businessmessages_v1 {
          * @param {callback} callback The callback that handles the response.
          * @return {object} Request object
          */
+        create(params: Params$Resource$Conversations$Surveys$Create, options: StreamMethodOptions): GaxiosPromise<Readable>;
         create(params?: Params$Resource$Conversations$Surveys$Create, options?: MethodOptions): GaxiosPromise<Schema$BusinessMessagesSurvey>;
+        create(params: Params$Resource$Conversations$Surveys$Create, options: StreamMethodOptions | BodyResponseCallback<Readable>, callback: BodyResponseCallback<Readable>): void;
         create(params: Params$Resource$Conversations$Surveys$Create, options: MethodOptions | BodyResponseCallback<Schema$BusinessMessagesSurvey>, callback: BodyResponseCallback<Schema$BusinessMessagesSurvey>): void;
         create(params: Params$Resource$Conversations$Surveys$Create, callback: BodyResponseCallback<Schema$BusinessMessagesSurvey>): void;
         create(callback: BodyResponseCallback<Schema$BusinessMessagesSurvey>): void;
     }
     export interface Params$Resource$Conversations$Surveys$Create extends StandardParameters {
-        /**
-         * Auth client or API Key for the request
-         */
-        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient;
         /**
          * Required. The conversation that contains the survey. Resolves to "conversations/{conversationId}".
          */
