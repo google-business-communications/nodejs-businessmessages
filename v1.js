@@ -28,14 +28,10 @@ var businessmessages_v1;
      *
      *
      * @example
+     * ```js
      * const {google} = require('googleapis');
      * const businessmessages = google.businessmessages('v1');
-     *
-     * @namespace businessmessages
-     * @type {Function}
-     * @version v1
-     * @variation v1
-     * @param {object=} options Options for Businessmessages
+     * ```
      */
     class Businessmessages {
         constructor(options, google) {

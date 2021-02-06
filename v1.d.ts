@@ -61,19 +61,41 @@ export declare namespace businessmessages_v1 {
      *
      *
      * @example
+     * ```js
      * const {google} = require('googleapis');
      * const businessmessages = google.businessmessages('v1');
-     *
-     * @namespace businessmessages
-     * @type {Function}
-     * @version v1
-     * @variation v1
-     * @param {object=} options Options for Businessmessages
+     * ```
      */
     export class Businessmessages {
         context: APIRequestContext;
         conversations: Resource$Conversations;
         constructor(options: GlobalOptions, google?: GoogleConfigurable);
+    }
+    /**
+     * Request to authenticate a conversation.
+     */
+    export interface Schema$BusinessMessagesAuthenticationRequest {
+        /**
+         * Details for authentication via OAuth.
+         */
+        oauth?: Schema$BusinessMessagesAuthenticationRequestOauth;
+    }
+    /**
+     * Details for authentication via OAuth.
+     */
+    export interface Schema$BusinessMessagesAuthenticationRequestOauth {
+        /**
+         * Required. The [ID](https://www.oauth.com/oauth2-servers/client-registration/client-id-secret/) of the application that asks for authorization.
+         */
+        clientId?: string | null;
+        /**
+         * Required. The [code challenge](https://tools.ietf.org/html/rfc7636#section-4.2) used to exchange access tokens.
+         */
+        codeChallenge?: string | null;
+        /**
+         * Required. An array that specifies the [scopes](https://oauth.net/2/scope/) of the request.
+         */
+        scopes?: string[] | null;
     }
     /**
      * Card content.
@@ -126,16 +148,16 @@ export declare namespace businessmessages_v1 {
          */
         forceRefresh?: boolean | null;
         /**
-         * Optional. Publicly reachable URL of the thumbnail. If you don&#39;t provide a thumbnail URL, the platform displays a blank placeholder thumbnail until the user&#39;s device downloads the file. Maximum 25 KB. Supported content types: image/jpeg, image/jpg, image/png
+         * Optional. Publicly reachable URL of the thumbnail. If you don't provide a thumbnail URL, the platform displays a blank placeholder thumbnail until the user's device downloads the file. Maximum 25 KB. Supported content types: image/jpeg, image/jpg, image/png
          */
         thumbnailUrl?: string | null;
     }
     /**
-     * Opens the user&#39;s default dialer app with the specified phone number filled in.
+     * Opens the user's default dialer app with the specified phone number filled in.
      */
     export interface Schema$BusinessMessagesDialAction {
         /**
-         * Required. The specified phone number, in [RFC 3966](https://tools.ietf.org/html/rfc3966) format. For example, &quot;+1-201-555-0123&quot;.
+         * Required. The specified phone number, in [RFC 3966](https://tools.ietf.org/html/rfc3966) format. For example, "+1-201-555-0123".
          */
         phoneNumber?: string | null;
     }
@@ -148,13 +170,22 @@ export declare namespace businessmessages_v1 {
          */
         eventType?: string | null;
         /**
-         * The name of the event, as set by Business Messages. Resolves to &quot;conversations/{conversationId}/events/{eventId}&quot;, where {conversationId} is the unique ID for the conversation and {eventId} is the unique ID for the event.
+         * The name of the event, as set by Business Messages. Resolves to "conversations/{conversationId\}/events/{eventId\}", where {conversationId\} is the unique ID for the conversation and {eventId\} is the unique ID for the event.
          */
         name?: string | null;
         /**
          * Details about the representative (human or chatbot) that sent the event.
          */
         representative?: Schema$BusinessMessagesRepresentative;
+    }
+    /**
+     * An image.
+     */
+    export interface Schema$BusinessMessagesImage {
+        /**
+         * Information about an image, including the URL of the image and the URL of the image's thumbnail.
+         */
+        contentInfo?: Schema$BusinessMessagesContentInfo;
     }
     /**
      * When tapped, sends a request for a live agent to join the conversation.
@@ -166,7 +197,7 @@ export declare namespace businessmessages_v1 {
      */
     export interface Schema$BusinessMessagesMedia {
         /**
-         * Information about a file, including the URL of the file and the URL of the file&#39;s thumbnail.
+         * Information about a file, including the URL of the file and the URL of the file's thumbnail.
          */
         contentInfo?: Schema$BusinessMessagesContentInfo;
         /**
@@ -183,15 +214,19 @@ export declare namespace businessmessages_v1 {
          */
         containsRichText?: boolean | null;
         /**
-         * Optional. Fallback text that displays if the user&#39;s device doesn&#39;t support the message type or content.
+         * Optional. Fallback text that displays if the user's device doesn't support the message type or content.
          */
         fallback?: string | null;
         /**
-         * The unique identifier of the message, assigned by the agent. If a message attempts to use the same `messageId` as a previous message, Business Messages returns an `ALREADY_EXISTS` error.
+         * Image message.
+         */
+        image?: Schema$BusinessMessagesImage;
+        /**
+         * Required. The unique identifier of the message, assigned by the agent. If a message attempts to use the same `messageId` as a previous message, Business Messages returns an `ALREADY_EXISTS` error.
          */
         messageId?: string | null;
         /**
-         * The name of the message, as set by Business Messages. Resolves to &quot;conversations/{conversationId}/messages/{messageId}&quot;, where {conversationId} is the unique ID for the conversation and {messageId} is the unique ID for the message.
+         * The name of the message, as set by Business Messages. Resolves to "conversations/{conversationId\}/messages/{messageId\}", where {conversationId\} is the unique ID for the conversation and {messageId\} is the unique ID for the message.
          */
         name?: string | null;
         /**
@@ -225,7 +260,7 @@ export declare namespace businessmessages_v1 {
      */
     export interface Schema$BusinessMessagesRepresentative {
         /**
-         * Optional. The representative&#39;s avatar image, as a publicly available URL. Displays as a circle. Avatar images don&#39;t support personal information, such as depictions of representatives in photographs or illustrations. Use images that don&#39;t identify individuals, such as icons, logos, or fictitious illustrations. After an avatar image is used in a message, the image can&#39;t be modified or deleted. Images must be 1024x1024 px and have a maximum files size of 50 KB.
+         * Optional. The representative's avatar image, as a publicly available URL. Displays as a circle. Avatar images don't support personal information, such as depictions of representatives in photographs or illustrations. Use images that don't identify individuals, such as icons, logos, or fictitious illustrations. After an avatar image is used in a message, the image can't be modified or deleted. Images must be 1024x1024 px and have a maximum files size of 50 KB.
          */
         avatarImage?: string | null;
         /**
@@ -264,7 +299,7 @@ export declare namespace businessmessages_v1 {
      */
     export interface Schema$BusinessMessagesSuggestedAction {
         /**
-         * Opens the user&#39;s default dialer app.
+         * Opens the user's default dialer app.
          */
         dialAction?: Schema$BusinessMessagesDialAction;
         /**
@@ -302,6 +337,10 @@ export declare namespace businessmessages_v1 {
          */
         action?: Schema$BusinessMessagesSuggestedAction;
         /**
+         * A request to start authentication flow.
+         */
+        authenticationRequest?: Schema$BusinessMessagesAuthenticationRequest;
+        /**
          * A request to have a live agent join the conversation.
          */
         liveAgentRequest?: Schema$BusinessMessagesLiveAgentRequest;
@@ -315,7 +354,7 @@ export declare namespace businessmessages_v1 {
      */
     export interface Schema$BusinessMessagesSurvey {
         /**
-         * The name of the survey, as set by Business Messages. Resolves to &quot;conversations/{conversationId}/surveys/{surveyId}&quot;, where {conversationId} is the unique ID for the conversation and {surveyId} is the unique ID for the survey.
+         * The name of the survey, as set by Business Messages. Resolves to "conversations/{conversationId\}/surveys/{surveyId\}", where {conversationId\} is the unique ID for the conversation and {surveyId\} is the unique ID for the survey.
          */
         name?: string | null;
     }
@@ -330,9 +369,9 @@ export declare namespace businessmessages_v1 {
         context: APIRequestContext;
         constructor(context: APIRequestContext);
         /**
-         * businessmessages.conversations.events.create
-         * @desc Creates an event in a conversation.
+         * Creates an event in a conversation.
          * @example
+         * ```js
          * // Before running the sample:
          * // - Enable the API at:
          * //   https://console.developers.google.com/apis/api/businessmessages.googleapis.com
@@ -358,7 +397,7 @@ export declare namespace businessmessages_v1 {
          *   const res = await businessmessages.conversations.events.create({
          *     // The unique identifier of the event, assigned by the agent. If an event has the same `eventId` as a previous event in the conversation, Business Messages returns an `ALREADY_EXISTS` error.
          *     eventId: 'placeholder-value',
-         *     // Required. The conversation that contains the message. Resolves to "conversations/{conversationId}".
+         *     // Required. The conversation that contains the message. Resolves to "conversations/{conversationId\}".
          *     parent: 'conversations/my-conversation',
          *
          *     // Request body metadata
@@ -386,16 +425,12 @@ export declare namespace businessmessages_v1 {
          *   throw e;
          * });
          *
-         * @alias businessmessages.conversations.events.create
-         * @memberOf! ()
+         * ```
          *
-         * @param {object} params Parameters for request
-         * @param {string=} params.eventId The unique identifier of the event, assigned by the agent. If an event has the same `eventId` as a previous event in the conversation, Business Messages returns an `ALREADY_EXISTS` error.
-         * @param {string} params.parent Required. The conversation that contains the message. Resolves to "conversations/{conversationId}".
-         * @param {().BusinessMessagesEvent} params.requestBody Request body data
-         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
-         * @param {callback} callback The callback that handles the response.
-         * @return {object} Request object
+         * @param params - Parameters for request
+         * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param callback - Optional callback that handles the response.
+         * @returns A promise if used with async/await, or void if used with a callback.
          */
         create(params: Params$Resource$Conversations$Events$Create, options: StreamMethodOptions): GaxiosPromise<Readable>;
         create(params?: Params$Resource$Conversations$Events$Create, options?: MethodOptions): GaxiosPromise<Schema$BusinessMessagesEvent>;
@@ -410,7 +445,7 @@ export declare namespace businessmessages_v1 {
          */
         eventId?: string;
         /**
-         * Required. The conversation that contains the message. Resolves to "conversations/{conversationId}".
+         * Required. The conversation that contains the message. Resolves to "conversations/{conversationId\}".
          */
         parent?: string;
         /**
@@ -422,9 +457,9 @@ export declare namespace businessmessages_v1 {
         context: APIRequestContext;
         constructor(context: APIRequestContext);
         /**
-         * businessmessages.conversations.messages.create
-         * @desc Sends a message from an agent to a user. If a conversation doesn't exist or an agent tries to send a message in a conversation that it isn't authorized to participate in, returns a `PERMISSION DENIED` error.
+         * Sends a message from an agent to a user. If a conversation doesn't exist or an agent tries to send a message in a conversation that it isn't authorized to participate in, returns a `PERMISSION DENIED` error.
          * @example
+         * ```js
          * // Before running the sample:
          * // - Enable the API at:
          * //   https://console.developers.google.com/apis/api/businessmessages.googleapis.com
@@ -448,7 +483,9 @@ export declare namespace businessmessages_v1 {
          *
          *   // Do the magic
          *   const res = await businessmessages.conversations.messages.create({
-         *     // Required. The conversation that contains the message. Resolves to "conversations/{conversationId}".
+         *     // Optional. A flag to send the specified fallback text instead of other message content. Only available to agents that aren't launched. If the flag is true and fallback text isn't specified, Business Messages returns an error.
+         *     forceFallback: 'placeholder-value',
+         *     // Required. The conversation that contains the message. Resolves to "conversations/{conversationId\}".
          *     parent: 'conversations/my-conversation',
          *
          *     // Request body metadata
@@ -458,6 +495,7 @@ export declare namespace businessmessages_v1 {
          *       //   "name": "my_name",
          *       //   "messageId": "my_messageId",
          *       //   "text": "my_text",
+         *       //   "image": {},
          *       //   "richCard": {},
          *       //   "representative": {},
          *       //   "suggestions": [],
@@ -473,6 +511,7 @@ export declare namespace businessmessages_v1 {
          *   //   "name": "my_name",
          *   //   "messageId": "my_messageId",
          *   //   "text": "my_text",
+         *   //   "image": {},
          *   //   "richCard": {},
          *   //   "representative": {},
          *   //   "suggestions": [],
@@ -486,15 +525,12 @@ export declare namespace businessmessages_v1 {
          *   throw e;
          * });
          *
-         * @alias businessmessages.conversations.messages.create
-         * @memberOf! ()
+         * ```
          *
-         * @param {object} params Parameters for request
-         * @param {string} params.parent Required. The conversation that contains the message. Resolves to "conversations/{conversationId}".
-         * @param {().BusinessMessagesMessage} params.requestBody Request body data
-         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
-         * @param {callback} callback The callback that handles the response.
-         * @return {object} Request object
+         * @param params - Parameters for request
+         * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param callback - Optional callback that handles the response.
+         * @returns A promise if used with async/await, or void if used with a callback.
          */
         create(params: Params$Resource$Conversations$Messages$Create, options: StreamMethodOptions): GaxiosPromise<Readable>;
         create(params?: Params$Resource$Conversations$Messages$Create, options?: MethodOptions): GaxiosPromise<Schema$BusinessMessagesMessage>;
@@ -505,7 +541,11 @@ export declare namespace businessmessages_v1 {
     }
     export interface Params$Resource$Conversations$Messages$Create extends StandardParameters {
         /**
-         * Required. The conversation that contains the message. Resolves to "conversations/{conversationId}".
+         * Optional. A flag to send the specified fallback text instead of other message content. Only available to agents that aren't launched. If the flag is true and fallback text isn't specified, Business Messages returns an error.
+         */
+        forceFallback?: boolean;
+        /**
+         * Required. The conversation that contains the message. Resolves to "conversations/{conversationId\}".
          */
         parent?: string;
         /**
@@ -517,9 +557,9 @@ export declare namespace businessmessages_v1 {
         context: APIRequestContext;
         constructor(context: APIRequestContext);
         /**
-         * businessmessages.conversations.surveys.create
-         * @desc Creates a customer satisfaction survey in a conversation. If an agent sends multiple surveys in the same conversation within 24 hours, surveys after the first return a `RESOURCE_EXHAUSTED` error. If the client doesn't support the survey feature, survey returns a `FAILED_PRECONDITION` error.
+         * Creates a customer satisfaction survey in a conversation. If an agent sends multiple surveys in the same conversation within 24 hours, surveys after the first return a `RESOURCE_EXHAUSTED` error. If the client doesn't support the survey feature, survey returns a `FAILED_PRECONDITION` error.
          * @example
+         * ```js
          * // Before running the sample:
          * // - Enable the API at:
          * //   https://console.developers.google.com/apis/api/businessmessages.googleapis.com
@@ -543,7 +583,7 @@ export declare namespace businessmessages_v1 {
          *
          *   // Do the magic
          *   const res = await businessmessages.conversations.surveys.create({
-         *     // Required. The conversation that contains the survey. Resolves to "conversations/{conversationId}".
+         *     // Required. The conversation that contains the survey. Resolves to "conversations/{conversationId\}".
          *     parent: 'conversations/my-conversation',
          *     // The unique identifier of the survey, assigned by the agent. If a survey attempts to use the same `surveyId` as a previous survey, Business Messages returns an `ALREADY_EXISTS` error.
          *     surveyId: 'placeholder-value',
@@ -569,16 +609,12 @@ export declare namespace businessmessages_v1 {
          *   throw e;
          * });
          *
-         * @alias businessmessages.conversations.surveys.create
-         * @memberOf! ()
+         * ```
          *
-         * @param {object} params Parameters for request
-         * @param {string} params.parent Required. The conversation that contains the survey. Resolves to "conversations/{conversationId}".
-         * @param {string=} params.surveyId The unique identifier of the survey, assigned by the agent. If a survey attempts to use the same `surveyId` as a previous survey, Business Messages returns an `ALREADY_EXISTS` error.
-         * @param {().BusinessMessagesSurvey} params.requestBody Request body data
-         * @param {object} [options] Optionally override request options, such as `url`, `method`, and `encoding`.
-         * @param {callback} callback The callback that handles the response.
-         * @return {object} Request object
+         * @param params - Parameters for request
+         * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param callback - Optional callback that handles the response.
+         * @returns A promise if used with async/await, or void if used with a callback.
          */
         create(params: Params$Resource$Conversations$Surveys$Create, options: StreamMethodOptions): GaxiosPromise<Readable>;
         create(params?: Params$Resource$Conversations$Surveys$Create, options?: MethodOptions): GaxiosPromise<Schema$BusinessMessagesSurvey>;
@@ -589,7 +625,7 @@ export declare namespace businessmessages_v1 {
     }
     export interface Params$Resource$Conversations$Surveys$Create extends StandardParameters {
         /**
-         * Required. The conversation that contains the survey. Resolves to "conversations/{conversationId}".
+         * Required. The conversation that contains the survey. Resolves to "conversations/{conversationId\}".
          */
         parent?: string;
         /**
@@ -603,3 +639,4 @@ export declare namespace businessmessages_v1 {
     }
     export {};
 }
+//# sourceMappingURL=v1.d.ts.map
