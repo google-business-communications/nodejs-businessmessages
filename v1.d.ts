@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { OAuth2Client, JWT, Compute, UserRefreshClient, GaxiosPromise, GoogleConfigurable, MethodOptions, StreamMethodOptions, GlobalOptions, GoogleAuth, BodyResponseCallback, APIRequestContext } from 'googleapis-common';
+import { OAuth2Client, JWT, Compute, UserRefreshClient, BaseExternalAccountClient, GaxiosPromise, GoogleConfigurable, MethodOptions, StreamMethodOptions, GlobalOptions, GoogleAuth, BodyResponseCallback, APIRequestContext } from 'googleapis-common';
 import { Readable } from 'stream';
 export declare namespace businessmessages_v1 {
     export interface Options extends GlobalOptions {
@@ -9,7 +9,7 @@ export declare namespace businessmessages_v1 {
         /**
          * Auth client or API Key for the request
          */
-        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient | GoogleAuth;
+        auth?: string | OAuth2Client | JWT | Compute | UserRefreshClient | BaseExternalAccountClient | GoogleAuth;
         /**
          * V1 error format.
          */
@@ -92,6 +92,10 @@ export declare namespace businessmessages_v1 {
          * Required. The [code challenge](https://tools.ietf.org/html/rfc7636#section-4.2) used to exchange access tokens.
          */
         codeChallenge?: string | null;
+        /**
+         * Optional. The [code challenge method](https://www.oauth.com/oauth2-servers/pkce/authorization-request/) used to generate the code challenge. If this parameter is omitted, the server assumes `plain`.
+         */
+        codeChallengeMethod?: string | null;
         /**
          * Required. An array that specifies the [scopes](https://oauth.net/2/scope/) of the request.
          */
@@ -254,6 +258,19 @@ export declare namespace businessmessages_v1 {
          * URL
          */
         url?: string | null;
+    }
+    /**
+     * A receipt of the message.
+     */
+    export interface Schema$BusinessMessagesReceipt {
+        /**
+         * The name of the receipt, as set by Business Messages. Resolves to "conversations/{conversationId\}/messages/{messageId\}/receipt", where {conversationId\} is the unique ID for the conversation and {messageId\} is the unique ID for the message.
+         */
+        name?: string | null;
+        /**
+         * A receipt type.
+         */
+        receiptType?: string | null;
     }
     /**
      * Details about the representative (human or chatbot) that sent the message.
@@ -538,6 +555,72 @@ export declare namespace businessmessages_v1 {
         create(params: Params$Resource$Conversations$Messages$Create, options: MethodOptions | BodyResponseCallback<Schema$BusinessMessagesMessage>, callback: BodyResponseCallback<Schema$BusinessMessagesMessage>): void;
         create(params: Params$Resource$Conversations$Messages$Create, callback: BodyResponseCallback<Schema$BusinessMessagesMessage>): void;
         create(callback: BodyResponseCallback<Schema$BusinessMessagesMessage>): void;
+        /**
+         * Sends a receipt for a message from an agent to a user.
+         * @example
+         * ```js
+         * // Before running the sample:
+         * // - Enable the API at:
+         * //   https://console.developers.google.com/apis/api/businessmessages.googleapis.com
+         * // - Login into gcloud by running:
+         * //   `$ gcloud auth application-default login`
+         * // - Install the npm module by running:
+         * //   `$ npm install googleapis`
+         *
+         * const {google} = require('googleapis');
+         * const businessmessages = google.businessmessages('v1');
+         *
+         * async function main() {
+         *   const auth = new google.auth.GoogleAuth({
+         *     // Scopes can be specified either as an array or as a single, space-delimited string.
+         *     scopes: [],
+         *   });
+         *
+         *   // Acquire an auth client, and bind it to all future calls
+         *   const authClient = await auth.getClient();
+         *   google.options({auth: authClient});
+         *
+         *   // Do the magic
+         *   const res = await businessmessages.conversations.messages.updateReceipt({
+         *     // The name of the receipt, as set by Business Messages. Resolves to "conversations/{conversationId\}/messages/{messageId\}/receipt", where {conversationId\} is the unique ID for the conversation and {messageId\} is the unique ID for the message.
+         *     name: 'conversations/my-conversation/messages/my-message/receipt',
+         *
+         *     // Request body metadata
+         *     requestBody: {
+         *       // request body parameters
+         *       // {
+         *       //   "name": "my_name",
+         *       //   "receiptType": "my_receiptType"
+         *       // }
+         *     },
+         *   });
+         *   console.log(res.data);
+         *
+         *   // Example response
+         *   // {
+         *   //   "name": "my_name",
+         *   //   "receiptType": "my_receiptType"
+         *   // }
+         * }
+         *
+         * main().catch(e => {
+         *   console.error(e);
+         *   throw e;
+         * });
+         *
+         * ```
+         *
+         * @param params - Parameters for request
+         * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+         * @param callback - Optional callback that handles the response.
+         * @returns A promise if used with async/await, or void if used with a callback.
+         */
+        updateReceipt(params: Params$Resource$Conversations$Messages$Updatereceipt, options: StreamMethodOptions): GaxiosPromise<Readable>;
+        updateReceipt(params?: Params$Resource$Conversations$Messages$Updatereceipt, options?: MethodOptions): GaxiosPromise<Schema$BusinessMessagesReceipt>;
+        updateReceipt(params: Params$Resource$Conversations$Messages$Updatereceipt, options: StreamMethodOptions | BodyResponseCallback<Readable>, callback: BodyResponseCallback<Readable>): void;
+        updateReceipt(params: Params$Resource$Conversations$Messages$Updatereceipt, options: MethodOptions | BodyResponseCallback<Schema$BusinessMessagesReceipt>, callback: BodyResponseCallback<Schema$BusinessMessagesReceipt>): void;
+        updateReceipt(params: Params$Resource$Conversations$Messages$Updatereceipt, callback: BodyResponseCallback<Schema$BusinessMessagesReceipt>): void;
+        updateReceipt(callback: BodyResponseCallback<Schema$BusinessMessagesReceipt>): void;
     }
     export interface Params$Resource$Conversations$Messages$Create extends StandardParameters {
         /**
@@ -552,6 +635,16 @@ export declare namespace businessmessages_v1 {
          * Request body metadata
          */
         requestBody?: Schema$BusinessMessagesMessage;
+    }
+    export interface Params$Resource$Conversations$Messages$Updatereceipt extends StandardParameters {
+        /**
+         * The name of the receipt, as set by Business Messages. Resolves to "conversations/{conversationId\}/messages/{messageId\}/receipt", where {conversationId\} is the unique ID for the conversation and {messageId\} is the unique ID for the message.
+         */
+        name?: string;
+        /**
+         * Request body metadata
+         */
+        requestBody?: Schema$BusinessMessagesReceipt;
     }
     export class Resource$Conversations$Surveys {
         context: APIRequestContext;
@@ -639,4 +732,3 @@ export declare namespace businessmessages_v1 {
     }
     export {};
 }
-//# sourceMappingURL=v1.d.ts.map

@@ -124,6 +124,37 @@ var businessmessages_v1;
                 return googleapis_common_1.createAPIRequest(parameters);
             }
         }
+        updateReceipt(paramsOrCallback, optionsOrCallback, callback) {
+            let params = (paramsOrCallback ||
+                {});
+            let options = (optionsOrCallback || {});
+            if (typeof paramsOrCallback === 'function') {
+                callback = paramsOrCallback;
+                params = {};
+                options = {};
+            }
+            if (typeof optionsOrCallback === 'function') {
+                callback = optionsOrCallback;
+                options = {};
+            }
+            const rootUrl = options.rootUrl || 'https://businessmessages.googleapis.com/';
+            const parameters = {
+                options: Object.assign({
+                    url: (rootUrl + '/v1/{+name}').replace(/([^:]\/)\/+/g, '$1'),
+                    method: 'PATCH',
+                }, options),
+                params,
+                requiredParams: ['name'],
+                pathParams: ['name'],
+                context: this.context,
+            };
+            if (callback) {
+                googleapis_common_1.createAPIRequest(parameters, callback);
+            }
+            else {
+                return googleapis_common_1.createAPIRequest(parameters);
+            }
+        }
     }
     businessmessages_v1.Resource$Conversations$Messages = Resource$Conversations$Messages;
     class Resource$Conversations$Surveys {
@@ -164,4 +195,3 @@ var businessmessages_v1;
     }
     businessmessages_v1.Resource$Conversations$Surveys = Resource$Conversations$Surveys;
 })(businessmessages_v1 = exports.businessmessages_v1 || (exports.businessmessages_v1 = {}));
-//# sourceMappingURL=v1.js.map
